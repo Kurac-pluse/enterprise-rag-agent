@@ -1,3 +1,6 @@
+# ==========================================
+# Java基本設定
+# ==========================================
 # Compiled class file
 *.class
 
@@ -22,3 +25,28 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# ==========================================
+# Backend (Gradle作業フォルダ)
+# ==========================================
+backend/.gradle/
+backend/build/
+backend/out/
+
+# ==========================================
+# Frontend (React / node_modules)
+# ==========================================
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+
+# ==========================================
+# エディタ・OSのゴミ
+# ==========================================
+.DS_Store
+.vscode/
+.idea/
