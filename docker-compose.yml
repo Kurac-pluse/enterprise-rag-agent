@@ -1,0 +1,31 @@
+version: '3.8'  # Docker Composeの構文ルールの「3.8」という規定に従うと宣言
+
+services:
+  # ----------------------------------------------------------------
+  # バックエンドサービス (Spring Boot)
+  # ----------------------------------------------------------------
+  backend:
+    build:
+      context: .      # モノレポのルートを基準にビルド
+      dockerfile: backend/Dockerfile
+    container_name: rag-backend
+    ports:
+      - "8080:8080"   # OCI内のポート8080をコンテナの8080にマージ
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod  # Issue 11で使う本番プロファイル指定
+      - JAVA_OPTS=-Xmx512m -Xms216m   # メモリの最大・最小割り当て設定
+    restart: always
+
+  # ----------------------------------------------------------------
+  # フロントエンドサービス (React + Nginx)
+  # ----------------------------------------------------------------
+  frontend:
+    build:
+      context: .      # モノレポのルートを基準にビルド
+      dockerfile: frontend/Dockerfile
+    container_name: rag-frontend
+    ports:
+      - "80:80"       # OCI外部からのアクセス（ポート80）をコンテナの80に接続
+    restart: always
+    depends_on:
+      - backend       # バックエンドが先に起動するように制御
